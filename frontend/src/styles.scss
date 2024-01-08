@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input {
+    border: 1px solid black;
+    border-radius: 6px;
+    padding: .25rem;
+}
+
+textarea {
+    border: 1px solid black;
+    border-radius: 6px;
+    padding: .25rem;
+}

@@ -1,0 +1,24 @@
+{
+  "name": "securecoding-trial",
+  "version": "1.0.0",
+  "scripts": {
+    "create-cert": "(cd frontend && unlink ssl | true) && (cd backend && unlink ssl | true) && mkcert -install && (cd ssl && mkcert localhost) && (cd frontend && ln -s ../ssl ssl) && (cd backend && ln -s ../ssl ssl)",
+    "create-config-symlink": "(cd frontend/src && unlink config | true) && (cd backend/src && unlink config | true) && (cd frontend/src && ln -s ../../config config) && (cd backend/src && ln -s ../../config config)",
+    "migrate": "npx prisma migrate dev"
+  },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "devDependencies": {
+    "@angular/cli": "^17.0.7",
+    "@biomejs/biome": "1.4.1",
+    "@types/node": "^20.10.4",
+    "prisma": "^5.7.0",
+    "tsc-watch": "^6.0.4",
+    "typescript": "^5.2.2"
+  },
+  "prisma": {
+    "schema": "backend/src/models/schema.prisma"
+  }
+}

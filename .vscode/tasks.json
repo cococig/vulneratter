@@ -1,0 +1,63 @@
+{
+    // For more information, visit: https://go.microsoft.com/fwlink/?LinkId=733558
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "frontend_start",
+            "type": "npm",
+            "script": "start",
+            "isBackground": true,
+            "problemMatcher": {
+                "owner": "typescript",
+                "pattern": "$tsc",
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": {
+                        "regexp": "(.*?)"
+                    },
+                    "endsPattern": {
+                        "regexp": "bundle generation complete"
+                    }
+                }
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/frontend"
+            }
+        },
+        {
+            "label": "frontend_test",
+            "type": "npm",
+            "script": "test",
+            "isBackground": true,
+            "problemMatcher": {
+                "owner": "typescript",
+                "pattern": "$tsc",
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": {
+                        "regexp": "(.*?)"
+                    },
+                    "endsPattern": {
+                        "regexp": "bundle generation complete"
+                    }
+                }
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/frontend"
+            }
+        },
+        {
+            "label": "frontend_stop",
+            "type": "shell",
+            "command": "echo ${input:frontend_terminate}"
+        }
+    ],
+    "inputs": [
+        {
+            "id": "frontend_terminate",
+            "type": "command",
+            "command": "workbench.action.tasks.terminate",
+            "args": "frontend_start"
+        }
+    ]
+}

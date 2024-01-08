@@ -1,0 +1,11 @@
+<header>
+    <div class="header-contents">
+        <div class="header-left">
+            <a routerLink="" class="font-bold text-lg">Vulneratter</a>
+        </div>
+        <div *ngIf="visibleLogout" class="flex items-center gap-4">
+            <div>ようこそ<a routerLink="/mypage" class="hover:underline cursor-pointer">{{userData?.name}}</a>さん</div>
+            <button class="hover:underline" (click)="logout()">ログアウト</button>
+        </div>
+    </div>
+</header>

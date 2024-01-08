@@ -1,0 +1,28 @@
+<div class="w-1/2 mx-auto border-x [&>div]:border-b [&>div]:w-full flex flex-col gap-4 items-center content-center">
+    <div class="p-4 sticky top-14 bg-white">
+        <form class="flex flex-col gap-2 items-end" [formGroup]="postForm" (ngSubmit)="onSubmit()">
+            <textarea name="content" id="content" cols="30" rows="3" placeholder="いまなにしてる？" formControlName="content"
+                class="w-full"></textarea>
+            <!-- VULNERABLE: 認証・認可不備 -->
+            <ng-container *ngIf="isImproperAuth">
+                <input type="hidden" name="userId" formControlName="userId">
+            </ng-container>
+            <button class="bg-blue-500 hover:bg-blue-700 rounded-md px-4 py-2 text-white font-bold w-max"
+                type="submit">投稿</button>
+        </form>
+    </div>
+    <div class="flex items-start content-between p-4" *ngFor="let article of (articles | async)?.reverse()">
+        <div class="flex-1">
+            <div class="text-sm">{{article.user.name}}</div>
+            <!-- VULNERABLE: XSS -->
+            <ng-container *ngIf="isXss;else noXSS">
+                <div class="text-xl" [innerHTML]="bypassSecurity(article.content)"></div>
+            </ng-container>
+            <ng-template #noXSS>
+                <div class="text-xl">{{article.content}}</div>
+            </ng-template>
+        </div>
+        <button class="w-max bg-red-500 hover:bg-red-700 rounded-md px-4 py-2 text-white font-bold"
+            *ngIf="article.userId === userId" (click)="deleteArticle(article.id)">削除</button>
+    </div>
+</div>

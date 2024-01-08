@@ -1,0 +1,26 @@
+<div class="flex flex-col gap-8 items-center justify-center w-full h-[80vh]">
+    <div class="flex flex-col items-center gap-1">
+        <div class="font-bold text-4xl">Vulneratter</div>
+        <div class="italic">脆弱性だらけのSNS風アプリケーション</div>
+    </div>
+    <div class="flex flex-col items-center gap-4 border border-solid border-black rounded-md shadow-md p-8">
+        <form class="flex flex-col gap-4" [formGroup]="loginForm" (ngSubmit)="onClickLogin()">
+            <div class="form-element">
+                <label for="email-input">メールアドレス</label>
+                <input type="text" name="email" id="email-input" formControlName="email">
+            </div>
+            <div class="form-element">
+                <label for="password-input">パスワード</label>
+                <input type="password" name="password" id="password-input" autocomplete="off"
+                    formControlName="password">
+            </div>
+            <small *ngIf="isVisibleFailureLoginMessage" class="self-center font-xs text-red-500">ログインに失敗しました</small>
+            <div class="submit-buttons">
+                <button type="submit" [disabled]="loginForm.invalid"
+                    class="bg-blue-500 hover:bg-blue-700 disabled:bg-blue-300 rounded-md text-white font-bold px-4 py-2">ログイン</button>
+            </div>
+        </form>
+        <a routerLink="/signup"
+            class="text-sm text-[#0000EE] underline visited:text-[#551A8B] active:text-[#FF0000]">新規登録画面へ</a>
+    </div>
+</div>

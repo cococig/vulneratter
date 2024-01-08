@@ -1,0 +1,29 @@
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    >.form-element {
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+
+        >label {
+            width: 5.5rem;
+
+            &::after {
+                content: ':';
+            }
+        }
+    }
+
+    >.submit-buttons {
+        display: flex;
+        gap: .5rem;
+        justify-content: center;
+
+        >button {
+            width: fit-content;
+        }
+    }
+}

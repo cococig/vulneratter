@@ -1,0 +1,37 @@
+services:
+  editor:
+    build:
+      context: ..
+      dockerfile: ./containers/Dockerfile
+      args:
+        - CAROOT_PATH=/workspaces/vulneratter/ssl
+    container_name: vulneratter-editor
+    tty: true
+    volumes:
+      - ../:/workspaces/vulneratter
+
+  backend:
+    build:
+      context: ..
+      dockerfile: ./containers/backend/Dockerfile
+    container_name: vulneratter-backend
+    tty: true
+    volumes:
+      - ../:/workspaces
+    ports:
+      - 3001:3001
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: ./containers/frontend/Dockerfile
+    container_name: vulneratter-frontend
+    tty: true
+    volumes:
+      - ../:/workspaces
+    ports:
+      - 4200:4200
+
+volumes:
+  my_volume:
+    driver: local
