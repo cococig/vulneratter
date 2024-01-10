@@ -1,6 +1,7 @@
 import { prisma } from "../db/client";
 import { config } from "../config/config";
 import bcrypt from "bcrypt";
+import { User } from "@prisma/client";
 
 /**
  * ハッシュ化されたパスワードを生成する関数。
@@ -90,7 +91,9 @@ export const isLoggedinUser: ControllerFn<
  * @param req セッションからユーザ情報を取得
  * @param res パスワードを除いたユーザ情報
  */
-export const getLoggedinUser: ControllerFn = async (req, res) => {
+export const getLoggedinUser: ControllerFn<
+	Omit<User, "password"> | null | { [key: string]: never } | { message: string }
+> = async (req, res) => {
 	const { session } = req;
 	try {
 		if (session.userId) {
@@ -163,7 +166,9 @@ export const createUser: ControllerFn<
  * @param req 更新するユーザのメールアドレス、ユーザ名、パスワード
  * @param res 更新されたユーザ
  */
-export const updateUser: ControllerFn = async (req, res) => {
+export const updateUser: ControllerFn<
+	Omit<User, "password"> | { message: string }
+> = async (req, res) => {
 	const { session } = req;
 	const { username, password, isPrivate } = req.body;
 

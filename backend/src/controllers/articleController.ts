@@ -96,32 +96,33 @@ export const getAllArticle: ControllerFn<
  * @param req 記事のID
  * @param res 削除された記事
  */
-export const deleteArticle: ControllerFn = async (req, res) => {
-	const { id } = req.body;
+export const deleteArticle: ControllerFn<Article | { message: string }> =
+	async (req, res) => {
+		const { id } = req.body;
 
-	const isImproperAuth = config.vulnerabilities.improperAuth;
+		const isImproperAuth = config.vulnerabilities.improperAuth;
 
-	try {
-		let article: Article;
-		if (isImproperAuth) {
-			article = await prisma.article.delete({
-				where: {
-					id,
-				},
-			});
-		} else {
-			const userId = req.session.userId;
-			if (userId == null) throw new Error("セッションがありません");
-			article = await prisma.article.delete({
-				where: {
-					id,
-					userId,
-				},
-			});
+		try {
+			let article: Article;
+			if (isImproperAuth) {
+				article = await prisma.article.delete({
+					where: {
+						id,
+					},
+				});
+			} else {
+				const userId = req.session.userId;
+				if (userId == null) throw new Error("セッションがありません");
+				article = await prisma.article.delete({
+					where: {
+						id,
+						userId,
+					},
+				});
+			}
+
+			res.status(200).json(article);
+		} catch (error) {
+			res.status(500).json({ message: "Server error" });
 		}
-
-		res.status(200).json(article);
-	} catch (error) {
-		res.status(500).json({ message: "Server error" });
-	}
-};
+	};
